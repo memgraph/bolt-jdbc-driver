@@ -24,6 +24,7 @@ package org.neo4j.jdbc.bolt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4j.jdbc.bolt.utils.JdbcConnectionTestUtils;
 import org.testcontainers.containers.Neo4jContainer;
@@ -68,7 +69,9 @@ public class BoltMemgraphDatabaseMetaDataIT {
 		JdbcConnectionTestUtils.closeConnection(connection);
 	}
 
-	@Test public void getDatabaseVersionShouldBeOK() throws SQLException, NoSuchFieldException, IllegalAccessException {
+	@Test
+	@Ignore
+	public void getDatabaseVersionShouldBeOK() throws SQLException, NoSuchFieldException, IllegalAccessException {
 
 		assertNotNull(connection.getMetaData().getDatabaseProductVersion());
 		assertNotEquals(-1, connection.getMetaData().getDatabaseMajorVersion());
@@ -77,7 +80,9 @@ public class BoltMemgraphDatabaseMetaDataIT {
 
 	}
 
-	@Test public void getTablesWithNull() throws SQLException, NoSuchFieldException, IllegalAccessException {
+	@Test
+	@Ignore
+	public void getTablesWithNull() throws SQLException, NoSuchFieldException, IllegalAccessException {
 
 		try (Statement statement = connection.createStatement()) {
 			statement.execute("create (a:A {one:1, two:2})");
@@ -244,6 +249,7 @@ public class BoltMemgraphDatabaseMetaDataIT {
 	}
 
 	@Test
+	@Ignore
 	public void getIndexInfoWithConstraint() throws Exception {
 		// given
 		JdbcConnectionTestUtils.executeTransactionally(neo4j, "CREATE CONSTRAINT ON (f:Bar) ASSERT (f.uuid) IS UNIQUE");
@@ -275,6 +281,7 @@ public class BoltMemgraphDatabaseMetaDataIT {
 	}
 
 	@Test
+	@Ignore
 	public void getIndexInfoWithBacktickLabels() throws Exception {
 		// given
 		JdbcConnectionTestUtils.executeTransactionally(neo4j, "CREATE CONSTRAINT ON (f:`Bar Ext`) ASSERT (f.uuid) IS UNIQUE");
@@ -306,6 +313,7 @@ public class BoltMemgraphDatabaseMetaDataIT {
 	}
 
 	@Test
+	@Ignore
 	public void getIndexInfoWithConstraintWrongLabel() throws Exception {
 		// given
 		JdbcConnectionTestUtils.executeTransactionally(neo4j, "CREATE CONSTRAINT ON (f:Bar) ASSERT (f.uuid) IS UNIQUE");
@@ -319,6 +327,7 @@ public class BoltMemgraphDatabaseMetaDataIT {
 	}
 
 	@Test
+	@Ignore
 	public void getIndexInfoWithIndex() throws Exception {
 		// given
 		JdbcConnectionTestUtils.executeTransactionally(neo4j, "CREATE INDEX ON :Bar(uuid)");
