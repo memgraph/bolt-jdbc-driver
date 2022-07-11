@@ -1,406 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- =========== -->
-	<!-- = General = -->
-	<!-- =========== -->
-	<groupId>org.neo4j</groupId>
-	<artifactId>neo4j-jdbc-parent</artifactId>
-	<version>4.0.6</version>
-	<packaging>pom</packaging>
-	<name>Neo4j JDBC Driver Parent</name>
-	<description>Parent POM for Neo4j JDBC Driver and Modules</description>
-	<url>https://github.com/neo4j-contrib/neo4j-jdbc</url>
+    <!-- ========== -->
+    <!-- = Parent = -->
+    <!-- ========== -->
+    <parent>
+        <groupId>org.neo4j</groupId>
+        <artifactId>neo4j-jdbc-parent</artifactId>
+        <version>4.0.6</version>
+    </parent>
 
-	<!-- =========== -->
-	<!-- = Modules = -->
-	<!-- =========== -->
-	<modules>
-		<module>neo4j-jdbc</module>
-		<module>neo4j-jdbc-bolt</module>
-		<module>neo4j-jdbc-http</module>
-		<module>neo4j-jdbc-driver</module>
-		<module>neo4j-jdbc-examples</module>
-	</modules>
+    <!-- =========== -->
+    <!-- = General = -->
+    <!-- =========== -->
+    <name>Neo4j JDBC Bolt</name>
+    <artifactId>neo4j-jdbc-bolt</artifactId>
+    <description>Bolt implementation for the Neo4j JDBC Driver</description>
 
-	<!-- =========== -->
-	<!-- = Licence = -->
-	<!-- =========== -->
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <!-- ============================= -->
+    <!-- = Dependency                = -->
+    <!-- ============================= -->
+    <dependencies>
+        <dependency>
+            <groupId>org.neo4j.driver</groupId>
+            <artifactId>neo4j-java-driver</artifactId>
+        </dependency>
 
-	<!-- ================ -->
-	<!-- = Organization = -->
-	<!-- ================ -->
-	<organization>
-		<name>LARUS Business Automation Srl</name>
-		<url>http://www.larus-ba.it</url>
-	</organization>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-jdbc</artifactId>
+        </dependency>
 
-	<!-- ============== -->
-	<!-- = Developers = -->
-	<!-- ============== -->
-	<developers>
-		<developer>
-			<id>NEO4J</id>
-			<organization>Neo Technology</organization>
-			<url>www.neo4j.com</url>
-		</developer>
-		<developer>
-			<id>LARUS</id>
-			<name>LARUS Business Automation</name>
-			<url>www.larus-ba.it</url>
-		</developer>
-	</developers>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
-	<!-- ============================= -->
-	<!-- = Source Control management = -->
-	<!-- ============================= -->
-	<scm>
-		<connection>scm:git:git@github.com:neo4j-contrib/neo4j-jdbc.git</connection>
-		<developerConnection>scm:git:git@github.com:neo4j-contrib/neo4j-jdbc.git</developerConnection>
-		<url>git@github.com:neo4j-contrib/neo4j-jdbc.git</url>
-	</scm>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
 
-	<!-- ============================= -->
-	<!-- = Properties = -->
-	<!-- ============================= -->
-	<properties>
-		<!-- General -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>8</java.version>
+        <!-- Performance tests dependencies -->
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<!-- Deps version -->
-		<mockito.version>4.6.1</mockito.version>
-		<junit.version>4.13.2</junit.version>
-		<jmh.version>1.35</jmh.version>
-		<neo4j.java.driver.version>4.4.6</neo4j.java.driver.version>
-		<neo4j.version>4.3.0</neo4j.version>
-		<httpclient.version>4.5.13</httpclient.version>
-		<jackson.version>2.13.3</jackson.version>
-		<testcontainers.version>1.17.2</testcontainers.version>
-
-		<!-- Plugin version -->
-		<maven.plugin.compiler>3.10.1</maven.plugin.compiler>
-		<maven.plugin.resources>2.7</maven.plugin.resources>
-		<maven.plugin.shade>3.3.0</maven.plugin.shade>
-		<maven.plugin.javadoc>3.4.0</maven.plugin.javadoc>
-		<maven.plugin.source>3.2.1</maven.plugin.source>
-		<maven.plugin.gpg>1.4</maven.plugin.gpg>
-		<maven.plugin.surefire>2.22.2</maven.plugin.surefire>
-
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-
-		<resilience4j.version>1.7.1</resilience4j.version>
-	</properties>
-
-	<!-- ============================= -->
-	<!-- = Dependency management = -->
-	<!-- ============================= -->
-	<dependencyManagement>
-		<dependencies>
-			<!-- Inter-module dependencies -->
-			<dependency>
-				<groupId>org.neo4j</groupId>
-				<artifactId>neo4j-jdbc</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.neo4j</groupId>
-				<artifactId>neo4j-jdbc-bolt</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.neo4j</groupId>
-				<artifactId>neo4j-jdbc-http</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Deps to the HTTP client -->
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${httpclient.version}</version>
-			</dependency>
-			<!-- Deps to Jackson for JSON manipulation -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>${jackson.version}</version>
-			</dependency>
-
-			<!-- Deps to Neo4j java driver -->
-			<dependency>
-				<groupId>org.neo4j.driver</groupId>
-				<artifactId>neo4j-java-driver</artifactId>
-				<version>${neo4j.java.driver.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>io.github.resilience4j</groupId>
-				<artifactId>resilience4j-retry</artifactId>
-				<version>${resilience4j.version}</version>
-			</dependency>
-
-
-			<!-- Deps to test framework -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>${mockito.version}</version>
-			</dependency>
-
-			<!-- Deps for performance tests -->
-			<dependency>
-				<groupId>org.openjdk.jmh</groupId>
-				<artifactId>jmh-core</artifactId>
-				<version>${jmh.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openjdk.jmh</groupId>
-				<artifactId>jmh-generator-annprocess</artifactId>
-				<version>${jmh.version}</version>
-			</dependency>
-
-			<!-- Deps for Testcontainers -->
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>testcontainers</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>neo4j</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<!-- ============================= -->
-	<!-- = Dependency = -->
-	<!-- ============================= -->
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<!-- ========= -->
-	<!-- = Build = -->
-	<!-- ========= -->
-	<build>
-		<!-- Enable filter resources -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<plugins>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.plugin.compiler}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<forceJavacCompilerUse>true</forceJavacCompilerUse>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>${maven.plugin.source}</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven.plugin.javadoc}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<source>8</source>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<!-- =========== -->
-	<!-- = Profile = -->
-	<!-- =========== -->
-	<profiles>
-		<!-- Profile used in the release process -->
-		<profile>
-			<id>release-sign-artifacts</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>${maven.plugin.source}</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>${maven.plugin.javadoc}</version>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Just run IT test -->
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*IT.java</include>
-								<include>**/*Test.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Just run IT test -->
-		<profile>
-			<id>integration-test</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*IT.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Just run Performance test -->
-		<profile>
-			<id>performance-test</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*PT.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Just run Quality Assurance check -->
-		<profile>
-			<id>sonar</id>
-			<properties>
-				<sonar.host.url>http://5.9.211.195:9000</sonar.host.url>
-				<sonar.language>java</sonar.language>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sonar-maven-plugin</artifactId>
-						<version>3.0.2</version>
-					</plugin>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.8</version>
-						<configuration>
-							<append>true</append>
-							<includes>
-								<include>org.neo4j.*</include>
-							</includes>
-							<destFile>${sonar.jacoco.reportPath}</destFile>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>neo4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

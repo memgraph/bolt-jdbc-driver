@@ -1,244 +1,223 @@
-== Overview: Neo4j JDBC Driver
-:neo4j-jdbc-version: 4.0.2
+= Neo4j JDBC Driver - Bolt
 
-image::https://github.com/neo4j-contrib/neo4j-jdbc/workflows/CI/badge.svg?branch=4.0[CI]
+This module implements the neo4j-jdbc driver with the BOLT protocol.
 
-ifndef::env-docs[]
+This module is a JDBC-way wrapper of the https://github.com/neo4j/neo4j-java-driver[Neo4j-java] driver currently implementing an alpha
+version of the BOLT protocol for Java.
 
-You can find the full documentation at: http://neo4j-contrib.github.io/neo4j-jdbc/
-endif::env-docs[]
+== Special wrapping for neo4j nodes relationships and paths. ==
 
-*This is a JDBC driver for Neo4j supporting Cypher over JDBC*.
+Even if you can access each value in a `ResultSet` with multiple type-specific method, you might want to get a whole _node_, _relationship_ or _path_.
 
-This driver was mainly developed by http://larus-ba.it[Larus BA, Italy], a certified consulting and integration solutions partner for Neo4j.
-*Thank you* so much for all your work.
+This *can't* be done by default with JDBC standard methods, to allow this usage we re-invented the use of `getObject(*)` method.
 
-Being a graph database, Neo4j is not serving data in a relational way, nevertheless thanks to this driver it's possible for
-projects that are using the classic JDBC connector in the relational paradigm to interact with Neo4j.
+If the object you are trying to get is an `*instanceof* InternalNode` (thus being a neo4j Node) it will be returned wrapped in a `Map<String, Object>`. This map will contain all the object's properties where their names (`String`) are the keys. It will also contains two default values mapped as "`_id`", representing neo4j internal identity ID and "`_labels`", a `Collection` of all the labels of that node.
 
-This driver supports various types of database transports, through:
+If the object is instead an `*instanceof* InternalRelationship` (thus being a neo4j Relationship) it will be also returned as a `Map<String, Object>`. This map will contain all the object's properties and the four default: "`_id`" the _internal_ neo4j ID, "`_type`" that is the _type_ of the relationship, "`_startId`" that is the _internal_ neo4j Node ID where the relation starts from, "`_endId`" that is the _internal_ neo4j Node ID where the relation ends.
 
-* The `HTTP` protocol using `jdbc:neo4j:http://<host>:<port>/` from Neo4j 2.0+
-* The `Bolt` direct connection protocol using `jdbc:neo4j:bolt://<host>:<port>/` from Neo4j 3.0+
-* The `Bolt` routing-aware protocol for clusters:
-** using `jdbc:neo4j:neo4j://<host>:<port>/` from Neo4j 4.0+
-** using `jdbc:neo4j:bolt+routing://<host>:<port>/` from Neo4j 3.1+ to 3.5.x
+If the object is instead an `*instanceof* InternalPath` (thus being a neo4j Path) it will be also returned as an `ArrayList<Map<String, Object>>`. this list will contain an alternation of Node and Relationship converted following the below two lines' specifications.
 
-You can also specify the encryption via the Bolt URI scheme (starting with the JDBC driver 4.0.3):
+IMPORTANT: You can't get an `InternalNode` or `InternalRelationship` directly `InternalPath`
 
- - `jdbc:neo4j:bolt://<host>:<port>/`
- - `jdbc:neo4j:bolt+s://<host>:<port>/`
- - `jdbc:neo4j:bolt+ssc://<host>:<port>/`
- - `jdbc:neo4j:neo4j://<host>:<port>/`
- - `jdbc:neo4j:neo4j+s://<host>:<port>/`
- - `jdbc:neo4j:neo4j+ssc://<host>:<port>/`
+When the object is not recognized as one of the two specified it is treated as a standard object and returned _directly_.
 
-See the official https://neo4j.com/docs/java-manual/current/client-applications/#java-driver-connection-uris[Neo4j Java driver documentation] to learn more.
+== Bolt module specific configuration ==
 
-[NOTE]
-The previous JDBC driver for Neo4j 2.x was moved to the https://github.com/neo4j-contrib/neo4j-jdbc-2x repository.
+When using the jdbc Bolt module you will be able to specify dedicated parameters.
+You can set them using both a `Properties` object during the connection phase and the URL parameters.
 
-.Versions compatibility
-|===
-|Neo4j-JDBC | Neo4j version | Neo4j Driver | Java | URI Schemes | Temporal and Spatial
-
-|https://github.com/neo4j-contrib/neo4j-jdbc/releases/tag/3.5.2[3.5.2]
-|3.5.x
-|1.7.5
-|1.8
-|http, bolt, bolt+routing
-|yes
-
-|https://github.com/neo4j-contrib/neo4j-jdbc/releases/tag/4.0.4[4.0.4]
-|3.5.x - 4.x
-|4.4.x
-|1.8
-|http, bolt, neo4j
-|yes
-
-|===
-
-
-=== Maven dependency
-
-For the all-in-one module supporting both Bolt and HTTP, you can simply use:
-
-[source,xml]
-<dependency>
-    <groupId>org.neo4j</groupId>
-    <artifactId>neo4j-jdbc-driver</artifactId>
-    <version>{neo4j-jdbc-version}</version>
-    <scope>runtime</scope>
-</dependency>
-
-If you want only one of the protocols, you can depend on its module:
-
-[source,xml]
-<dependency>
-    <groupId>org.neo4j</groupId>
-    <artifactId>neo4j-jdbc-bolt</artifactId>
-    <version>{neo4j-jdbc-version}</version>
-    <scope>runtime</scope>
-</dependency>
-
-or
-
-[source,xml]
-<dependency>
-    <groupId>org.neo4j</groupId>
-    <artifactId>neo4j-jdbc-http</artifactId>
-    <version>{neo4j-jdbc-version}</version>
-    <scope>runtime</scope>
-</dependency>
-
-=== Minimum viable snippet
-
-// tag::mvs[]
-
-.Dependency declaration
-[source,subs=attributes]
------
-org.neo4j:neo4j-jdbc-driver:{neo4j-jdbc-version}
------
-
-.Run Query
-[source,java]
 ----
-// Connecting
-try (Connection connection = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "neo4j", password);
-    // Querying
-     PreparedStatement stmt = connection.prepareStatement("MATCH (u:User)-[:FRIEND]-(f:User) WHERE u.name = $0 RETURN f.name, f.age")) {
-     
-    stmt.setString(0, "John");
-    
-    try (ResultSet rs = stmt.executeQuery()) {
-        while (rs.next()) {
-            System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
-        }
-    }
-}
+Properties info = new Properties();
+info.setProperty("connection.acquisition.timeout","20");
+info.setProperty("connection.liveness.check.timeout","20");
+info.setProperty("connection.timeout","321000");
+
+DriverManager.getConnection(jdbc:neo4j:bolt://test?&connection.timeout=1000&encryption=true, info);
 ----
-// end::mvs[]
 
-*Please note* that the example above uses the try-with-resource blocks that automatically closes resources when the `try` block is exited.
+The values inside the Properties are used as default ones and overridden by the values passed into the URL.
 
-=== Usage with Neo4j Server
+Here's a list of the keys you can use.
 
-* Install a Neo4j 4.x server and start it with the Bolt protocol enabled
-* Connect with URLs in the following 3 forms:
-** `jdbc:neo4j:http://<host>:<port>/` (e.g. `jdbc:neo4j:http://localhost/`)
-** `jdbc:neo4j:bolt://<host>:<port>/` (e.g. `jdbc:neo4j:bolt://localhost/`)
-** `jdbc:neo4j:neo4j://<host>:<port>/` (e.g. `jdbc:neo4j:bolt+routing://localhost?routing:policy=eu`)
-* You can also use additional parameters in the URL separated by an `&` character for authentication, debug mode, SSL encryption and flattening e.g. `jdbc:neo4j:bolt://localhost/?user=neo4j&password=xxxx&debug=true&nossl&flatten=[-1,100,1000]`
+==== Trust Strategy ====
+You can use the property `trust.strategy`, a string value of your choice among the `Config.TrustStrategy.Strategy` enum values.
+When a file is required you *must* add the `trusted.certificate.file` property that *must* be a valid filename of the certificate file.
 
-[NOTE]
-*We've deprecated the usage of `,` as the parameter separator in favour of `&` to be compliant with the URL parameter syntax.*
+==== Flatten ====
+When a ResultSet is flattened it explodes the returned columns (ONLY if they are ALL nodes and relationships) adding virtual columns with id, labels, type and entity specific fields.
 
-* Add the JDBC driver dependency or jar file to your project
-* Get a connection from `DriverManager`
-* Execute queries and transactions using the Cypher graph query language
+You can enable such behaviour just by adding ?flatten=x to your url connection where x possible values are:
 
-==== List of Supported Neo4j Configuration parameters
+* -1: the entire resultSet is fetched (may slow down the performances with big resultSets) for retrieving nodes and relationships structure (useful if you're retrieving results with lots of different properties)
+
+* N > 0: the specified number of rows are fetched for retrieving specific properties
+
+Example:
+Given a :User node connected to :Attributes nodes like (:Attribute {age:20})< -[:AGED]-(:User {username:"username"})-[FULL_NAME]- >(:Attribute {full_name:"Name Surname"})
+
+with the query:
+
+MATCH (u:User)--(a:Attribute) RETURN u, a;
+
+you will have only the columns (u, a) with flattening disabled;
+
+with flatten=1 you will have u, u.id, u.labels, u.username, a, a.id, a.type, a.age
+
+with flatten=-1 you will have u, u.id, u.labels, u.username, a, a.id, a.type, a.age, a.full_name
+
+=== Connection Acquisition Timeout ===
+This setting limits the amount of time a session or transaction can spend waiting for a free connection to appear in the pool before throwing an exception.
+
+Property key: `connection.acquisition.timeout`.
+
+Value: amount of milliseconds (E.G: 60000)
+
+For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
+
+=== Max Connection Lifetime ===
+How often the connection health is checked in the pool.
+
+Property key: `max.connection.lifetime`.
+
+Value: amount of minutes (E.G: 60)
+
+For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
+
+=== Max Connection Poolsize ===
+The maximum number of connection in the pool.
+
+Property key: `max.connection.poolsize`.
+
+Value: number of connections (E.G: 50)
+
+For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
+
+=== Connection Liveness Check Timeout  ===
+You normally should not need to tune this parameter. No connection liveliness check is done by default. Value 0 means connections will always be tested for validity and negative values mean connections will never be tested.
+
+Property key: `connection.liveness.check.timeout`.
+
+Value: the minimum idle time in milliseconds (E.G: 1000)
+
+=== Connection Timeout ===
+Specify socket connection timeout.
+
+Property key: `connection.timeout`.
+
+Value: the timeout duration in milliseconds (E.G: 1000)
+
+For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-configuration-connection-timeout[Connection Timeout]
+
+=== Encryption ===
+Set to use encrypted/unencrypted traffic.
+
+Property key: `encryption`.
+
+Value: `true` or `false`
+
+=== Leaked Session Logging ===
+Enable logging of leaked sessions.
+
+Property key: `leaked.sessions.logging`.
+
+Value: `true` or `false`
+
+=== Load Balancing Strategy ===
+Provide an alternative load balancing strategy for the routing driver to use.
+
+Property key: `load.balancing.strategy`
+
+Value: `LEAST_CONNECTED` or `ROUND_ROBIN`
+
+=== Max Transaction Retry Time ===
+Specify the maximum time transactions are allowed to retry.
+
+Property key: `max.transaction.retry.time`
+
+Value: the timeout duration in milliseconds (E.G: 1000)
+
+
+== Temporal functions ==
+Since the 3.4 version you can get the temporal information stored in the database both as `java.sql.\*` typs and `java.time.*`.
+
+These methods are implemented to get temporal data:
+
+* `resultSet.getObject(int)` returns the `java.sql.` objects
+* `resultSet.getObject(String)` returns the `java.sql.` objects
+* `resultSet.getObject(int, Class)` returns the `java.time.` types, if you pass it.
+* `resultSet.getObject(String, Class)` returns the `java.time.` types, if you pass it.
+* `resultSet.getTimestamp` for `datetime()` and `localdatetime()`
+* `resultSet.getDate` for `date()`
+* `resultSet.getTime` for `time()` and `localtime()`
+
+.Java types for neo4j temporal functions
+|===
+|java.time | neo4j | java.sql
+
+|LocalDate | date() | Date
+
+|LocalTime | localtime() | Time
+
+|OffsetTime | time() | Time
+
+|LocalDateTime | localdatetime() | Timestamp
+
+|ZonedDateTime | datetime() | Timestamp
 
 |===
-|Property Name |Supported Values |Description
 
-|trust.strategy |TRUST_ALL_CERTIFICATES, TRUST_CUSTOM_CA_SIGNED_CERTIFICATES, TRUST_SYSTEM_CA_SIGNED_CERTIFICATES |The supported trusted strategies
-|trusted.certificate.file |File Path |The path of the certificate file
-|connection.acquisition.timeout |Any Long |The acquisition time
-|connection.liveness.check.timeout |Any Long |The liveness check timeout
-|connection.timeout |Any Long |The connection timeout
-|encryption |true/false |Activate the application encryption
-|leaked.sessions.logging |true/false |If log leaked session
-|max.connection.lifetime |Any Long |The connection lifetime
-|max.connection.poolsize |Any Int |The max pool size
-|max.transaction.retry.time |Any Long | The retry time for a transaction transient error
-|database |String |The database name, if not specified connects to the default instance
-|readonly |true/false |If specified creates a fixed read only connection, any further modification via the `Connection#setReadOnly` method will have no effect
-|autocommit |true/false |If specified sets the autocommit property as initial value, you can still change the autocommit value by using `Connection#setAutoCommit` method, but it will have effect only for newly created transactions
-|usebookmarks |true/false |If specified disables the bookmarks
+=== Duration ===
+The Duration concept is not in the JDBC specifications, so you can retrieve it using:
+
+* `resultSet.getObject(int | String)` returns a `Map<String, Object>` with Long values for the keys: `'months', 'days','seconds', 'nanoseconds'`
+
+* `resultSet.getObject(int | String, org.neo4j.driver.v1.types.IsoDuration.class)` returns the internal object.
+
+
+=== Inside nodes, relationships or arrays ===
+When you retrieve a Node, Relationship or an array, the internal object created by a temporal function contains
+always a `java.sql` type value.
+
+E.g:
+```
+ResultSet rs = statement.executeQuery("CREATE (e:Event {when: [localdatetime('2015-12-31T19:32:24')] }) RETURN e AS event");
+
+rs.next();
+Map<String, Object> map = (Map)rs.getObject(1);
+Object whenField = map.get("when");
+List whenList = (List) whenField;
+
+java.sql.Timestamp when = (java.sql.Timestamp)whenList.get(0);
+```
+
+== Spatial functions ==
+Since the 3.4 version you can get the spatial information stored in the database both as `Map`.
+
+You can retrieve the spatial data using:
+
+* `resultSet.getObject(int | String)` returns a `Map<String, Object>`
+* `resultSet.getObject(int | String, org.neo4j.driver.v1.types.Point)` returns a `Point`
+
+.Keys for Spatial functions
+|===
+|neo4j | keys(value)
+
+| point({x, y}) | srid(7203), crs('cartesian'), x, y
+| point({x, y, z}) | srid(9157), crs('cartesian-3d'), x, y, z
+| point({latitude, longitude}) |  srid(4326), crs('wgs-84'), x, y, latitude, longitude
+| point({latitude, longitude, height}) |  srid(4979), crs('wgs-84-3d'), x, y, z, latitude, longitude, height
 |===
 
+=== Inside nodes, relationships or arrays ===
+When you retrieve a Node, Relationship or an array, the internal object created by a spatial function contains
+always a `Map<String, Object>`
 
-=== Flattening
-
-As most JDBC clients and tools don't support complex objects, the driver can flatten returned nodes and relationships by providing all their properties as individual columns with names like `u.name`,`r.since` if you just return a node `u` or relationship `r`.
-
-This is enabled with the JDBC-URL parameter `flatten=<rows>`, where `<rows>` indicates how many rows are sampled to determine those columns.
-With `-1` all rows are sampled and with any other value you determine the number of rows being looked at.
-
-=== Tomcat
-When the JDBC driver is configured as a JNDI resource into Tomcat, you must include these two arguments on `Resource` configuration:
-
-* `removeAbandonedOnBorrow="true"`
-* `closeMethod="close"`
-
-Here's an example:
-
+E.g:
 ```
-    <Resource name="jdbc/neo4j"
-              auth="Container"
-              type="javax.sql.DataSource"
-              username="neo4j"
-              password="password"
-              driverClassName="org.neo4j.jdbc.bolt.BoltDriver"
-              url="jdbc:neo4j:bolt://localhost"
-              removeAbandonedOnBorrow="true"
-              closeMethod="close"
-              />
+ResultSet rs = statement.executeQuery("RETURN [point({ latitude: 12, longitude: 56, height: 4321 })] AS geo_3d");
+
+rs.next();
+Object points = rs.getObject(1);
+List pointList = (List) points;
+Map pointMap = (Map) point;
 ```
-
-
-=== Building the driver yourself
-
-First clone https://github.com/neo4j-contrib/neo4j-jdbc[the repository].
-
-This project is composed by the following modules:
-
-* https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc[Neo4j JDBC] - the core module
-* https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-bolt[Neo4j JDBC - Bolt] - module supporting the Bolt protocol
-* https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-http[Neo4j JDBC - HTTP] - module supporting the HTTP protocol
-* https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-driver[Neo4j JDBC - Driver packaging] - module to package all above modules
-
-
-.Run all unit tests & integration tests
--------------------------------------------------
-mvn clean test
--------------------------------------------------
-
-.Run only integration tests
--------------------------------------------------
-mvn clean test -Pintegration-test
--------------------------------------------------
-
-.Run performance tests
---------------------------------------------------
-mvn clean test -Pperformance-test
---------------------------------------------------
-
-[NOTE]
-To run the performance test, you must have a Neo4j Server 3.3.x running with the Bolt protocol enabled on port 7687 (default).
-
-
-=== License
-
-Copyright (c) https://neo4j.com[Neo4j] and https://www.larus-ba.it[LARUS Business Automation]
-
-The "Neo4j JDBC Driver" is licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-
-You may obtain a copy of the License at
-
-https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and
-limitations under the License.
-
-=== Feedback
-
-Please provide feedback and report bugs as link:./issues[GitHub issues] or join the http://neo4j.com/slack[neo4j-users Slack] and ask on the #neo4j-jdbc channel.
-You might also ask on http://stackoverflow.com/questions/tagged/neo4j+jdbc[StackOverflow], please tag your question there with `neo4j` and `jdbc`.
