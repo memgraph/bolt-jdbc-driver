@@ -189,7 +189,7 @@ public class DataConverterUtils {
     }
 
     /**
-     * It transforms a Neo4j Point (Spatial) into a java Map
+     * It transforms a Memgraph Point (Spatial) into a java Map
      * @param point
      * @return
      */
@@ -258,7 +258,7 @@ public class DataConverterUtils {
     }
 
     /**
-     * It build a new Map with the same keys but with pure java type, instead of Neo4j types
+     * It build a new Map with the same keys but with pure java type, instead of Memgraph types
      * @param fields
      * @return
      */

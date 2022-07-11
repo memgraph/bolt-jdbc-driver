@@ -2,9 +2,9 @@
  *
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Neo4j".
+ * This file is part of the "LARUS Integration Framework for Memgraph".
  * <p>
- * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -28,7 +28,7 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.neo4j.jdbc.bolt.BoltNeo4jConnection;
+import org.neo4j.jdbc.bolt.BoltMemgraphConnection;
 import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
@@ -64,7 +64,7 @@ public class DriverTestIT {
 		prop.setProperty("user","user");
 		prop.setProperty("password","password");
 		Connection connection = driver.connect("jdbc:neo4j:" + neo4j.getBoltUrl() + "/?nossl", prop);
-		Assert.assertTrue(connection instanceof BoltNeo4jConnection);
+		Assert.assertTrue(connection instanceof BoltMemgraphConnection);
 	}
 
 	@Test public void shouldReturnNullWithBadUrl() throws SQLException {
@@ -87,7 +87,7 @@ public class DriverTestIT {
 		Assert.assertNull(connection);
 	}
 
-	@Test public void shouldCallTheNextDriverWhenNonNeo4jUrl() throws Exception {
+	@Test public void shouldCallTheNextDriverWhenNonMemgraphUrl() throws Exception {
 		Driver driver = new Driver();
 		DriverManager.registerDriver(driver);
 		java.sql.Driver mysqlDriver = mock(java.sql.Driver.class);

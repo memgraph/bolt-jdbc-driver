@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Neo4j".
+ * This file is part of the "LARUS Integration Framework for Memgraph".
  * <p>
- * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -38,7 +38,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.neo4j.driver.Config.builder;
-import static org.neo4j.jdbc.bolt.utils.Neo4jContainerUtils.createNeo4jContainer;
+import static org.neo4j.jdbc.bolt.utils.MemgraphContainerUtils.createNeo4jContainer;
 
 /**
  * @author Stefan Armbruster

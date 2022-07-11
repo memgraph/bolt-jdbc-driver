@@ -2,9 +2,9 @@
  *
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Neo4j".
+ * This file is part of the "LARUS Integration Framework for Memgraph".
  * <p>
- * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -23,7 +23,7 @@
 package org.neo4j.jdbc;
 
 import org.neo4j.jdbc.bolt.BoltDriver;
-import org.neo4j.jdbc.boltrouting.BoltRoutingNeo4jDriver;
+import org.neo4j.jdbc.boltrouting.BoltRoutingMemgraphDriver;
 
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Driver extends Neo4jDriver {
+public class Driver extends MemgraphDriver {
 
 	/**
 	 * Prefix/class hashMap of all available Driver.
@@ -41,7 +41,7 @@ public class Driver extends Neo4jDriver {
 	private static final Map<String, Class> DRIVERS = new HashMap<>();
 
 	static {
-		DRIVERS.put(BoltRoutingNeo4jDriver.JDBC_BOLT_ROUTING_PREFIX, BoltRoutingNeo4jDriver.class);
+		DRIVERS.put(BoltRoutingMemgraphDriver.JDBC_BOLT_ROUTING_PREFIX, BoltRoutingMemgraphDriver.class);
 		DRIVERS.put(BoltDriver.JDBC_BOLT_PREFIX, BoltDriver.class);
 	}
 
@@ -67,8 +67,8 @@ public class Driver extends Neo4jDriver {
 	 * @return The driver
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private Neo4jDriver getDriver(String url) throws SQLException {
-		Neo4jDriver driver = null;
+	private MemgraphDriver getDriver(String url) throws SQLException {
+		MemgraphDriver driver = null;
 
 		if (url == null) {
 			throw new SQLException("null is not a valid url");
@@ -87,13 +87,13 @@ public class Driver extends Neo4jDriver {
 		return driver;
 	}
 
-	private Neo4jDriver getDriverForPrefix(String prefix) throws SQLException {
-		Neo4jDriver driver = null;
+	private MemgraphDriver getDriverForPrefix(String prefix) throws SQLException {
+		MemgraphDriver driver = null;
 		try {
 			for (Map.Entry<String, Class> entry : DRIVERS.entrySet()) {
 				if (prefix.matches(entry.getKey())) {
 					Constructor constructor = entry.getValue().getDeclaredConstructor();
-					driver = (Neo4jDriver) constructor.newInstance();
+					driver = (MemgraphDriver) constructor.newInstance();
 				}
 			}
 		} catch (Exception e) {

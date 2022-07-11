@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2018 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Neo4j".
+ * This file is part of the "LARUS Integration Framework for Memgraph".
  * <p>
- * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -138,7 +138,7 @@ public class BoltRoutingIT {
             }
             connection.commit();
 
-            String bookmark = connection.getClientInfo(BoltRoutingNeo4jDriver.BOOKMARK);
+            String bookmark = connection.getClientInfo(BoltRoutingMemgraphDriver.BOOKMARK);
             Assert.assertNotNull(bookmark);
 
             connection.setReadOnly(true);
@@ -164,7 +164,7 @@ public class BoltRoutingIT {
         String bookmarksAsString = String.join(",", bookmarks);
         try  (Connection connection = DriverManager.getConnection("jdbc:neo4j:" + cluster.getURI().toString(), NEO4J_USER, NEO4J_PASSWORD)) {
 
-            connection.setClientInfo(BoltRoutingNeo4jDriver.BOOKMARK, bookmarksAsString);
+            connection.setClientInfo(BoltRoutingMemgraphDriver.BOOKMARK, bookmarksAsString);
             connection.setReadOnly(true);
 
             try (Statement statement = connection.createStatement()) {
@@ -187,7 +187,7 @@ public class BoltRoutingIT {
             }
             connection.commit();
 
-            final String bookmark = connection.getClientInfo(BoltRoutingNeo4jDriver.BOOKMARK);
+            final String bookmark = connection.getClientInfo(BoltRoutingMemgraphDriver.BOOKMARK);
             Assert.assertNotNull(bookmark);
             return bookmark;
         }

@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Neo4j".
+ * This file is part of the "LARUS Integration Framework for Memgraph".
  * <p>
- * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -34,7 +34,7 @@ import java.util.function.Function;
 
 /**
  * A cache for the driver instances in order to reduce the number of them.
- * In the JDBC specification the connection has the properties meanwhile in Neo4j they are on the driver.
+ * In the JDBC specification the connection has the properties meanwhile in Memgraph they are on the driver.
  */
 public class BoltDriverCache {
 

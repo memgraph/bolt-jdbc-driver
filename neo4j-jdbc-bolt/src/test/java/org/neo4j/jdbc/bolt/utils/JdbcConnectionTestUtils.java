@@ -5,7 +5,7 @@ import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.SessionConfig;
 import org.neo4j.jdbc.bolt.BoltDriver;
-import org.neo4j.jdbc.boltrouting.BoltRoutingNeo4jDriver;
+import org.neo4j.jdbc.boltrouting.BoltRoutingMemgraphDriver;
 import org.testcontainers.containers.Neo4jContainer;
 
 import java.sql.Connection;
@@ -17,9 +17,9 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import static org.neo4j.jdbc.bolt.utils.Neo4jContainerUtils.getVersion;
-import static org.neo4j.jdbc.bolt.utils.Neo4jContainerUtils.isEnterpriseEdition;
-import static org.neo4j.jdbc.bolt.utils.Neo4jContainerUtils.isV4;
+import static org.neo4j.jdbc.bolt.utils.MemgraphContainerUtils.getVersion;
+import static org.neo4j.jdbc.bolt.utils.MemgraphContainerUtils.isEnterpriseEdition;
+import static org.neo4j.jdbc.bolt.utils.MemgraphContainerUtils.isV4;
 
 /**
  * Help to build the connection for the IT test
@@ -157,8 +157,8 @@ public class JdbcConnectionTestUtils {
     }
 
     private static void waitForDatabase(String version, Session session) {
-        // YIELD is not supported in Neo4j 4.0
-        // SHOW..YIELD..RETURN is not supported until Neo4j 4.2
+        // YIELD is not supported in Memgraph 4.0
+        // SHOW..YIELD..RETURN is not supported until Memgraph 4.2
         if (version.startsWith("4.0") || version.startsWith("4.1")) {
             try {
                 Thread.sleep(500);

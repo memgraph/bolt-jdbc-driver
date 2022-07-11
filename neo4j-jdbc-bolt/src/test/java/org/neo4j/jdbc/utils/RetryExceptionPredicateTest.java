@@ -20,7 +20,7 @@ public class RetryExceptionPredicateTest {
         Mockito.when(mockedTransaction.run(Mockito.anyString(), Mockito.anyMap()))
                 .thenThrow(new TransientException("code.allowed.to.retry", ""))
                 .thenReturn(mockedResult);
-        final Result result = BoltNeo4jUtils.runTransactionWithRetries(mockedTransaction, "", Collections.emptyMap());
+        final Result result = BoltMemgraphUtils.runTransactionWithRetries(mockedTransaction, "", Collections.emptyMap());
         final Collection<Invocation> invocations = Mockito.mockingDetails(mockedTransaction).getInvocations();
         Assert.assertEquals(mockedResult, result);
         Assert.assertEquals(2, invocations.size());
