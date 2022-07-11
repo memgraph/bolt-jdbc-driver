@@ -17,7 +17,7 @@
     <!-- = General = -->
     <!-- =========== -->
     <name>Neo4j JDBC Bolt</name>
-    <artifactId>neo4j-jdbc-bolt</artifactId>
+    <artifactId>memgraph-jdbc-bolt</artifactId>
     <description>Bolt implementation for the Neo4j JDBC Driver</description>
 
     <!-- ============================= -->
@@ -31,7 +31,7 @@
 
         <dependency>
             <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-jdbc</artifactId>
+            <artifactId>memgraph-jdbc</artifactId>
         </dependency>
 
         <dependency>

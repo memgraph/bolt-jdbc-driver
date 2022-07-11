@@ -16,9 +16,9 @@
     <!-- =========== -->
     <!-- = General = -->
     <!-- =========== -->
-    <name>Neo4j JDBC Packaging</name>
-    <artifactId>neo4j-jdbc-driver</artifactId>
-    <description>Module to package Neo4j JDBC Driver into one jar</description>
+    <name>Memgraph JDBC Packaging</name>
+    <artifactId>memgraph-jdbc-driver</artifactId>
+    <description>Module to package Memgraph JDBC Driver into one jar</description>
 
     <!-- ================ -->
     <!-- = Dependency   = -->
@@ -26,7 +26,7 @@
     <dependencies>
         <dependency>
             <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-jdbc-bolt</artifactId>
+            <artifactId>memgraph-jdbc-bolt</artifactId>
         </dependency>
 
         <dependency>

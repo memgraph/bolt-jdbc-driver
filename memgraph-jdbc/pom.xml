@@ -16,9 +16,9 @@
     <!-- =========== -->
     <!-- = General = -->
     <!-- =========== -->
-    <artifactId>neo4j-jdbc</artifactId>
+    <artifactId>memgraph-jdbc</artifactId>
     <packaging>jar</packaging>
-    <name>Neo4j JDBC Driver</name>
-    <description>Common module for every implementation of the Neo4j JDBC Driver</description>
+    <name>Memgraph JDBC Driver</name>
+    <description>Common module for every implementation of the Memgraph JDBC Driver</description>
 
 </project>
