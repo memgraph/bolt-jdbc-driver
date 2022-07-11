@@ -7,11 +7,11 @@
 	<!-- = General = -->
 	<!-- =========== -->
 	<groupId>org.neo4j</groupId>
-	<artifactId>neo4j-jdbc-parent</artifactId>
+	<artifactId>memgraph-jdbc-parent</artifactId>
 	<version>4.0.6</version>
 	<packaging>pom</packaging>
-	<name>Neo4j JDBC Driver Parent</name>
-	<description>Parent POM for Neo4j JDBC Driver and Modules</description>
+	<name>Memgraph JDBC Driver Parent</name>
+	<description>Parent POM for Memgraph JDBC Driver and Modules</description>
 	<url>https://github.com/neo4j-contrib/neo4j-jdbc</url>
 
 	<!-- =========== -->
