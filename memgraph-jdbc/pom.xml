@@ -8,7 +8,7 @@
     <!-- = Parent = -->
     <!-- ========== -->
     <parent>
-        <groupId>org.neo4j</groupId>
+        <groupId>org.memgraph</groupId>
         <artifactId>memgraph-jdbc-parent</artifactId>
         <version>4.0.6</version>
     </parent>
