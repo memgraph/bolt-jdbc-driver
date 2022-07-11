@@ -24,7 +24,6 @@
 	<!-- = Modules = -->
 	<!-- =========== -->
 	<modules>
-		<module>mybatis</module>
 	</modules>
 
     <!-- ============================= -->
