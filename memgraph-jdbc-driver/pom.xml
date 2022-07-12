@@ -16,9 +16,9 @@
     <!-- =========== -->
     <!-- = General = -->
     <!-- =========== -->
-    <name>Memgraph JDBC Packaging</name>
+    <name>Graph JDBC Packaging</name>
     <artifactId>memgraph-jdbc-driver</artifactId>
-    <description>Module to package Memgraph JDBC Driver into one jar</description>
+    <description>Module to package Graph JDBC Driver into one jar</description>
 
     <!-- ================ -->
     <!-- = Dependency   = -->

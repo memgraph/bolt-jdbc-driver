@@ -5,7 +5,7 @@ import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.SessionConfig;
 import org.memgraph.jdbc.bolt.BoltDriver;
-import org.memgraph.jdbc.boltrouting.BoltRoutingMemgraphDriver;
+import org.memgraph.jdbc.boltrouting.BoltRoutingGraphDriver;
 import org.testcontainers.containers.Neo4jContainer;
 
 import java.sql.Connection;

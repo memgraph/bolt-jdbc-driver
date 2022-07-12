@@ -18,7 +18,7 @@
     <!-- =========== -->
     <artifactId>memgraph-jdbc</artifactId>
     <packaging>jar</packaging>
-    <name>Memgraph JDBC Driver</name>
-    <description>Common module for every implementation of the Memgraph JDBC Driver</description>
+    <name>Graph JDBC Driver</name>
+    <description>Common module for every implementation of the Graph JDBC Driver</description>
 
 </project>

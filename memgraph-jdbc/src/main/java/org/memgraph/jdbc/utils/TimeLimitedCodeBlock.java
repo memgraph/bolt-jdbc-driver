@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Memgraph".
+ * This file is part of the "LARUS Integration Framework for Neo4j".
  * <p>
- * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -37,7 +37,7 @@ public class TimeLimitedCodeBlock {
 	 * @param runnable The runnable to run
 	 * @param timeout The maximum time a run should last
 	 * @param timeUnit The <code>TimeUnit</code> unit for the timeout
-	 * @throws MemgraphJdbcRuntimeException Any exception thrown by the runnable wrapped.
+	 * @throws GraphJdbcRuntimeException Any exception thrown by the runnable wrapped.
 	 */
 	public static void runWithTimeout(final Runnable runnable, long timeout, TimeUnit timeUnit) {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -52,7 +52,7 @@ public class TimeLimitedCodeBlock {
 		}
 		catch (Exception e) {
 			future.cancel(true);
-			throw new MemgraphJdbcRuntimeException(e);
+			throw new GraphJdbcRuntimeException(e);
 		}
 	}
 

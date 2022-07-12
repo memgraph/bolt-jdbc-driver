@@ -17,8 +17,8 @@
 	<!-- =========== -->
 	<artifactId>memgraph-jdbc-examples</artifactId>
 	<packaging>pom</packaging>
-	<name>Memgraph JDBC Driver Examples</name>
-	<description>Parent POM for Memgraph JDBC Driver Examples</description>
+	<name>Graph JDBC Driver Examples</name>
+	<description>Parent POM for Graph JDBC Driver Examples</description>
 
 	<!-- =========== -->
 	<!-- = Modules = -->

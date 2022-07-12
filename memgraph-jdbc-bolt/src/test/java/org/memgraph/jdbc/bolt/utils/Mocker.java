@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Memgraph".
+ * This file is part of the "LARUS Integration Framework for Neo4j".
  * <p>
- * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -33,7 +33,7 @@ import org.neo4j.driver.internal.spi.ConnectionProvider;
 import org.neo4j.driver.summary.ResultSummary;
 import org.neo4j.driver.summary.SummaryCounters;
 import org.memgraph.jdbc.bolt.FakeRecord;
-import org.memgraph.jdbc.bolt.impl.BoltMemgraphConnectionImpl;
+import org.memgraph.jdbc.bolt.impl.BoltProtocolGraphConnectionImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -125,24 +125,24 @@ public class Mocker {
 		return session;
 	}
 
-	public static BoltMemgraphConnectionImpl mockOpenConnection() throws SQLException {
-		BoltMemgraphConnectionImpl mockConnection = mock(BoltMemgraphConnectionImpl.class);
+	public static BoltProtocolGraphConnectionImpl mockOpenConnection() throws SQLException {
+		BoltProtocolGraphConnectionImpl mockConnection = mock(BoltProtocolGraphConnectionImpl.class);
 		when(mockConnection.isClosed()).thenReturn(false);
 		return mockConnection;
 	}
 
-	public static BoltMemgraphConnectionImpl mockConnectionClosed() throws SQLException {
-		BoltMemgraphConnectionImpl mockConnection = mock(BoltMemgraphConnectionImpl.class);
+	public static BoltProtocolGraphConnectionImpl mockConnectionClosed() throws SQLException {
+		BoltProtocolGraphConnectionImpl mockConnection = mock(BoltProtocolGraphConnectionImpl.class);
 		when(mockConnection.isClosed()).thenReturn(true);
 		return mockConnection;
 	}
 
-	public static BoltMemgraphConnectionImpl mockOpenConnectionWithResult(Result cur) throws SQLException {
+	public static BoltProtocolGraphConnectionImpl mockOpenConnectionWithResult(Result cur) throws SQLException {
 		Transaction mockTransaction = mock(Transaction.class);
 		when(mockTransaction.run(anyString())).thenReturn(cur);
 		when(mockTransaction.run(anyString(), any(Map.class))).thenReturn(cur);
 
-		BoltMemgraphConnectionImpl mockConnection = mockOpenConnection();
+		BoltProtocolGraphConnectionImpl mockConnection = mockOpenConnection();
 		when(mockConnection.getTransaction()).thenReturn(mockTransaction);
 		return mockConnection;
 	}

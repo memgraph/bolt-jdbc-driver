@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Memgraph".
+ * This file is part of the "LARUS Integration Framework for Neo4j".
  * <p>
- * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -24,7 +24,7 @@ import org.neo4j.driver.Config;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 import org.memgraph.jdbc.bolt.cache.BoltDriverCache;
-import org.memgraph.jdbc.bolt.impl.BoltMemgraphDriverImpl;
+import org.memgraph.jdbc.bolt.impl.BoltProtocolGraphDriverImpl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,7 +38,7 @@ import java.util.Properties;
  * @author AgileLARUS
  * @since 3.0.0
  */
-public class BoltDriver extends BoltMemgraphDriverImpl {
+public class BoltDriver extends BoltProtocolGraphDriverImpl {
 
 	public static final String JDBC_BOLT_PREFIX = "^bolt(\\+s|\\+ssc)?$";
 	private static final BoltDriverCache cache = new BoltDriverCache(params ->

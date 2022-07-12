@@ -2,9 +2,9 @@
  *
  * Copyright (c) 2016 LARUS Business Automation [http://www.larus-ba.it]
  * <p>
- * This file is part of the "LARUS Integration Framework for Memgraph".
+ * This file is part of the "LARUS Integration Framework for Neo4j".
  * <p>
- * The "LARUS Integration Framework for Memgraph" is licensed under the Apache License, Version 2.0 (the "License");
+ * The "LARUS Integration Framework for Neo4j" is licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
@@ -29,7 +29,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.memgraph.jdbc.Driver;
-import org.memgraph.jdbc.bolt.BoltMemgraphConnection;
+import org.memgraph.jdbc.bolt.BoltProtocolGraphConnection;
 import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
@@ -65,7 +65,7 @@ public class DriverTestIT {
 		prop.setProperty("user","user");
 		prop.setProperty("password","password");
 		Connection connection = driver.connect("jdbc:neo4j:" + neo4j.getBoltUrl() + "/?nossl", prop);
-		Assert.assertTrue(connection instanceof BoltMemgraphConnection);
+		Assert.assertTrue(connection instanceof BoltProtocolGraphConnection);
 	}
 
 	@Test public void shouldReturnNullWithBadUrl() throws SQLException {
