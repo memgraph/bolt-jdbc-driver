@@ -34,7 +34,7 @@ import java.util.function.Function;
 
 /**
  * A cache for the driver instances in order to reduce the number of them.
- * In the JDBC specification the connection has the properties meanwhile in Memgraph they are on the driver.
+ * In the JDBC specification the connection has the properties meanwhile in Graph they are on the driver.
  */
 public class BoltDriverCache {
 

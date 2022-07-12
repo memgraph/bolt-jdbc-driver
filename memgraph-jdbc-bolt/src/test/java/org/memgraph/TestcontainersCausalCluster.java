@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
-import static org.memgraph.jdbc.bolt.utils.MemgraphContainerUtils.createNeo4jContainer;
+import static org.memgraph.jdbc.bolt.utils.GraphContainerUtils.createNeo4jContainer;
 
 public class TestcontainersCausalCluster {
     private static final int DEFAULT_BOLT_PORT = 7687;
@@ -110,7 +110,7 @@ public class TestcontainersCausalCluster {
                                 .withLabel("memberType", instanceType.toString())
                                 // Expose the default bolt port on the sidecar
                                 .withExposedPorts(DEFAULT_BOLT_PORT)
-                                // And redirect that port to the corresponding Memgraph instance
+                                // And redirect that port to the corresponding Graph instance
                                 .withCommand(String
                                         .format("tcp-listen:%d,fork,reuseaddr tcp-connect:%s:%1$d", DEFAULT_BOLT_PORT, name))
                 ));

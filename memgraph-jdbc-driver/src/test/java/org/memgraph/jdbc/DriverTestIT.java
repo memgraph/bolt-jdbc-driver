@@ -29,7 +29,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.memgraph.jdbc.Driver;
-import org.memgraph.jdbc.bolt.BoltProtocolGraphConnection;
+import org.memgraph.jdbc.bolt.BoltGraphConnection;
 import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
@@ -65,7 +65,7 @@ public class DriverTestIT {
 		prop.setProperty("user","user");
 		prop.setProperty("password","password");
 		Connection connection = driver.connect("jdbc:neo4j:" + neo4j.getBoltUrl() + "/?nossl", prop);
-		Assert.assertTrue(connection instanceof BoltProtocolGraphConnection);
+		Assert.assertTrue(connection instanceof BoltGraphConnection);
 	}
 
 	@Test public void shouldReturnNullWithBadUrl() throws SQLException {
@@ -88,7 +88,7 @@ public class DriverTestIT {
 		Assert.assertNull(connection);
 	}
 
-	@Test public void shouldCallTheNextDriverWhenNonMemgraphUrl() throws Exception {
+	@Test public void shouldCallTheNextDriverWhenNonGraphUrl() throws Exception {
 		Driver driver = new Driver();
 		DriverManager.registerDriver(driver);
 		java.sql.Driver mysqlDriver = mock(java.sql.Driver.class);

@@ -15,13 +15,13 @@ public class JSONUtils {
     private static final ObjectWriter OBJECT_WRITER;
     static {
         OBJECT_MAPPER.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        SimpleModule module = new SimpleModule("MemgraphJdbcSerializer");
+        SimpleModule module = new SimpleModule("GraphJdbcSerializer");
         module.addSerializer(Node.class, new NodeSerializer());
         module.addSerializer(Relationship.class, new RelationshipSerializer());
         module.addSerializer(Path.class, new PathSerializer());
         module.addSerializer(Point.class, new PointSerializer()); // TODO add more serializers in order to remove ObjectConverter
         OBJECT_MAPPER.registerModule(module);
-        OBJECT_MAPPER.setDefaultPrettyPrinter(new MemgraphJdbcPrettyPrinter());
+        OBJECT_MAPPER.setDefaultPrettyPrinter(new GraphJdbcPrettyPrinter());
         OBJECT_WRITER = OBJECT_MAPPER.writerWithDefaultPrettyPrinter();
     }
 

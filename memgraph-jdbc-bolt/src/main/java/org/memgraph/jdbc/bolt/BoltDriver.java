@@ -24,7 +24,7 @@ import org.neo4j.driver.Config;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 import org.memgraph.jdbc.bolt.cache.BoltDriverCache;
-import org.memgraph.jdbc.bolt.impl.BoltProtocolGraphDriverImpl;
+import org.memgraph.jdbc.bolt.impl.BoltGraphDriverImpl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,7 +38,7 @@ import java.util.Properties;
  * @author AgileLARUS
  * @since 3.0.0
  */
-public class BoltDriver extends BoltProtocolGraphDriverImpl {
+public class BoltDriver extends BoltGraphDriverImpl {
 
 	public static final String JDBC_BOLT_PREFIX = "^bolt(\\+s|\\+ssc)?$";
 	private static final BoltDriverCache cache = new BoltDriverCache(params ->

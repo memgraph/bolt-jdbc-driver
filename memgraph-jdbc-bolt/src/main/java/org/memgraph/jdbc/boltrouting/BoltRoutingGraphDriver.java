@@ -25,8 +25,8 @@ import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.exceptions.ServiceUnavailableException;
 import org.memgraph.jdbc.bolt.DriverFactory;
 import org.memgraph.jdbc.bolt.cache.BoltDriverCache;
-import org.memgraph.jdbc.bolt.impl.BoltProtocolGraphDriverImpl;
-import org.memgraph.jdbc.utils.BoltProtocolGraphUtils;
+import org.memgraph.jdbc.bolt.impl.BoltGraphDriverImpl;
+import org.memgraph.jdbc.utils.BoltGraphUtils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,7 +41,7 @@ import java.util.Properties;
  * @author AgileLARUS
  * @since 3.3.1
  */
-public class BoltRoutingGraphDriver extends BoltProtocolGraphDriverImpl {
+public class BoltRoutingGraphDriver extends BoltGraphDriverImpl {
 
     public static final String JDBC_BOLT_ROUTING_PREFIX = "^neo4j(\\+s|\\+ssc)?$";
 
@@ -58,10 +58,10 @@ public class BoltRoutingGraphDriver extends BoltProtocolGraphDriverImpl {
                 driver.verifyConnectivity();
                 return driver;
             } catch (ServiceUnavailableException e) {
-                BoltProtocolGraphUtils.closeSafely(driver, null);
+                BoltGraphUtils.closeSafely(driver, null);
             } catch (Throwable e) {
                 // for any other errors, we first close the driver and then rethrow the original error out.
-                BoltProtocolGraphUtils.closeSafely(driver, null);
+                BoltGraphUtils.closeSafely(driver, null);
                 throw e;
             }
         }

@@ -114,7 +114,7 @@ public class BoltDriverCacheTest {
     }
 
     @Test
-    public void shouldCreateNewInstanceByMemgraphURI() throws URISyntaxException {
+    public void shouldCreateNewInstanceByGraphURI() throws URISyntaxException {
         List<URI> url = Arrays.asList(URI.create("neo4j://localhost"));
         Config.ConfigBuilder configBuilder = Config.builder();
         AuthToken authToken = AuthTokens.basic("neo4j", "password");

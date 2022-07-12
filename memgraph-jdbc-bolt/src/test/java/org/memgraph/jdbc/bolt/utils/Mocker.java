@@ -33,7 +33,7 @@ import org.neo4j.driver.internal.spi.ConnectionProvider;
 import org.neo4j.driver.summary.ResultSummary;
 import org.neo4j.driver.summary.SummaryCounters;
 import org.memgraph.jdbc.bolt.FakeRecord;
-import org.memgraph.jdbc.bolt.impl.BoltProtocolGraphConnectionImpl;
+import org.memgraph.jdbc.bolt.impl.BoltGraphConnectionImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -125,24 +125,24 @@ public class Mocker {
 		return session;
 	}
 
-	public static BoltProtocolGraphConnectionImpl mockOpenConnection() throws SQLException {
-		BoltProtocolGraphConnectionImpl mockConnection = mock(BoltProtocolGraphConnectionImpl.class);
+	public static BoltGraphConnectionImpl mockOpenConnection() throws SQLException {
+		BoltGraphConnectionImpl mockConnection = mock(BoltGraphConnectionImpl.class);
 		when(mockConnection.isClosed()).thenReturn(false);
 		return mockConnection;
 	}
 
-	public static BoltProtocolGraphConnectionImpl mockConnectionClosed() throws SQLException {
-		BoltProtocolGraphConnectionImpl mockConnection = mock(BoltProtocolGraphConnectionImpl.class);
+	public static BoltGraphConnectionImpl mockConnectionClosed() throws SQLException {
+		BoltGraphConnectionImpl mockConnection = mock(BoltGraphConnectionImpl.class);
 		when(mockConnection.isClosed()).thenReturn(true);
 		return mockConnection;
 	}
 
-	public static BoltProtocolGraphConnectionImpl mockOpenConnectionWithResult(Result cur) throws SQLException {
+	public static BoltGraphConnectionImpl mockOpenConnectionWithResult(Result cur) throws SQLException {
 		Transaction mockTransaction = mock(Transaction.class);
 		when(mockTransaction.run(anyString())).thenReturn(cur);
 		when(mockTransaction.run(anyString(), any(Map.class))).thenReturn(cur);
 
-		BoltProtocolGraphConnectionImpl mockConnection = mockOpenConnection();
+		BoltGraphConnectionImpl mockConnection = mockOpenConnection();
 		when(mockConnection.getTransaction()).thenReturn(mockTransaction);
 		return mockConnection;
 	}
