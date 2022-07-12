@@ -9,7 +9,7 @@
     <!-- ========== -->
     <parent>
         <groupId>org.memgraph</groupId>
-        <artifactId>memgraph-jdbc-parent</artifactId>
+        <artifactId>graph-jdbc-parent</artifactId>
         <version>4.0.6</version>
     </parent>
 
@@ -17,7 +17,7 @@
     <!-- = General = -->
     <!-- =========== -->
     <name>Graph JDBC Packaging</name>
-    <artifactId>memgraph-jdbc-driver</artifactId>
+    <artifactId>graph-jdbc-driver</artifactId>
     <description>Module to package Graph JDBC Driver into one jar</description>
 
     <!-- ================ -->
@@ -26,7 +26,7 @@
     <dependencies>
         <dependency>
             <groupId>org.memgraph</groupId>
-            <artifactId>memgraph-jdbc-bolt</artifactId>
+            <artifactId>graph-jdbc-bolt</artifactId>
         </dependency>
 
         <dependency>

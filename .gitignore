@@ -5,7 +5,7 @@
 
 # Package Files #
 *.jar
-!memgraph-jdbc-idea-settings.jar
+!graph-jdbc-idea-settings.jar
 *.war
 *.ear
 dependency-reduced-pom.xml

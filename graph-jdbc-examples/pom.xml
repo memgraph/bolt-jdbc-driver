@@ -8,14 +8,14 @@
     <!-- ========== -->
     <parent>
         <groupId>org.memgraph</groupId>
-        <artifactId>memgraph-jdbc-parent</artifactId>
+        <artifactId>graph-jdbc-parent</artifactId>
         <version>4.0.6</version>
     </parent>
 
 	<!-- =========== -->
 	<!-- = General = -->
 	<!-- =========== -->
-	<artifactId>memgraph-jdbc-examples</artifactId>
+	<artifactId>graph-jdbc-examples</artifactId>
 	<packaging>pom</packaging>
 	<name>Graph JDBC Driver Examples</name>
 	<description>Parent POM for Graph JDBC Driver Examples</description>
@@ -32,7 +32,7 @@
     <dependencies>
 		<dependency>
 			<groupId>org.memgraph</groupId>
-			<artifactId>memgraph-jdbc-driver</artifactId>
+			<artifactId>graph-jdbc-driver</artifactId>
 			<version>4.0.6</version>
 			<scope>runtime</scope>
 		</dependency>

@@ -9,7 +9,7 @@
     <!-- ========== -->
     <parent>
         <groupId>org.memgraph</groupId>
-        <artifactId>memgraph-jdbc-parent</artifactId>
+        <artifactId>graph-jdbc-parent</artifactId>
         <version>4.0.6</version>
     </parent>
 
@@ -17,7 +17,7 @@
     <!-- = General = -->
     <!-- =========== -->
     <name>Neo4j JDBC Bolt</name>
-    <artifactId>memgraph-jdbc-bolt</artifactId>
+    <artifactId>graph-jdbc-bolt</artifactId>
     <description>Bolt implementation for the Neo4j JDBC Driver</description>
 
     <!-- ============================= -->
@@ -31,7 +31,7 @@
 
         <dependency>
             <groupId>org.memgraph</groupId>
-            <artifactId>memgraph-jdbc</artifactId>
+            <artifactId>graph-jdbc</artifactId>
         </dependency>
 
         <dependency>
