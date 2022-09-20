@@ -333,7 +333,7 @@ public class BoltGraphConnectionIT {
     public void closesDriverWhenConnectivityTestFails() {
         CustomTestBoltDriver testJdbcDriver = new CustomTestBoltDriver();
 
-        assertConnectionFails(testJdbcDriver, "jdbc:neo4j:bolt://example.com");
+        assertConnectionFails(testJdbcDriver, "jdbc:graph:bolt://example.com");
         assertBoltDriverIsClosed(testJdbcDriver.getDriver());
     }
 

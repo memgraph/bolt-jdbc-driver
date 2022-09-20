@@ -7,7 +7,7 @@ import java.sql.*;
  */
 public class PerformanceTestData {
 
-    public static final String NEO_URL = "jdbc:neo4j:bolt://localhost:7687?user=neo4j,password=test";
+    public static final String NEO_URL = "jdbc:graph:bolt://localhost:7687?user=neo4j,password=test";
 
     /**
      * Get a new connection to the external database

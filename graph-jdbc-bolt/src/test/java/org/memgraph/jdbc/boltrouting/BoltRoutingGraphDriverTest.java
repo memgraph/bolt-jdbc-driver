@@ -37,7 +37,7 @@ public class BoltRoutingGraphDriverTest {
 
 	@Test public void shoulNotAcceptURL() throws SQLException {
 		GraphDriver driver = new BoltRoutingGraphDriver();
-		assertFalse(driver.acceptsURL("jdbc:neo4j:http://localhost:7687"));
+		assertFalse(driver.acceptsURL("jdbc:graph:http://localhost:7687"));
 		assertFalse(driver.acceptsURL("jdbc:file://192.168.0.1:7687"));
 		assertFalse(driver.acceptsURL("bolt://localhost:7687"));
 	}

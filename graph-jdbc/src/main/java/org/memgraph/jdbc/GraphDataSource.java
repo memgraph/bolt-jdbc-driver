@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public abstract class GraphDataSource implements javax.sql.DataSource {
 
-	public static final String NEO4J_JDBC_PREFIX = "jdbc:neo4j:";
+	public static final String NEO4J_JDBC_PREFIX = "jdbc:graph:";
 	protected           String serverName        = "localhost";
 	protected String user;
 	protected String password;

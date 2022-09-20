@@ -87,24 +87,24 @@ public class GraphDataSourceTest {
 		this.dataSource.setIsSsl(false);
 		this.dataSource.setUser("test");
 
-		assertEquals("jdbc:neo4j:bolt://localhost?nossl,user=test", this.dataSource.getUrl("bolt"));
+		assertEquals("jdbc:graph:bolt://localhost?nossl,user=test", this.dataSource.getUrl("bolt"));
 
 		this.dataSource.setIsSsl(true);
-		assertEquals("jdbc:neo4j:bolt://localhost?user=test", this.dataSource.getUrl("bolt"));
+		assertEquals("jdbc:graph:bolt://localhost?user=test", this.dataSource.getUrl("bolt"));
 
 		this.dataSource.setPassword("password");
 		this.dataSource.setIsSsl(false);
-		assertEquals("jdbc:neo4j:bolt://localhost?nossl,user=test,password=password", this.dataSource.getUrl("bolt"));
-		assertEquals("jdbc:neo4j:http://localhost?nossl,user=test,password=password", this.dataSource.getUrl("http"));
+		assertEquals("jdbc:graph:bolt://localhost?nossl,user=test,password=password", this.dataSource.getUrl("bolt"));
+		assertEquals("jdbc:graph:http://localhost?nossl,user=test,password=password", this.dataSource.getUrl("http"));
 
 		this.dataSource.setPortNumber(7687);
-		assertEquals("jdbc:neo4j:bolt://localhost:7687?nossl,user=test,password=password", this.dataSource.getUrl("bolt"));
+		assertEquals("jdbc:graph:bolt://localhost:7687?nossl,user=test,password=password", this.dataSource.getUrl("bolt"));
 
 		this.dataSource.setPassword("pa&word");
 		this.dataSource.setIsSsl(false);
 		this.dataSource.setPortNumber(0);
-		assertEquals("jdbc:neo4j:bolt://localhost?nossl,user=test,password=pa%26word", this.dataSource.getUrl("bolt"));
-		assertEquals("jdbc:neo4j:http://localhost?nossl,user=test,password=pa%26word", this.dataSource.getUrl("http"));
+		assertEquals("jdbc:graph:bolt://localhost?nossl,user=test,password=pa%26word", this.dataSource.getUrl("bolt"));
+		assertEquals("jdbc:graph:http://localhost?nossl,user=test,password=pa%26word", this.dataSource.getUrl("http"));
 	}
 
 }

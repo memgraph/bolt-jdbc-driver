@@ -64,7 +64,7 @@ public class DriverTestIT {
 		Properties prop = new Properties();
 		prop.setProperty("user","user");
 		prop.setProperty("password","password");
-		Connection connection = driver.connect("jdbc:neo4j:" + neo4j.getBoltUrl() + "/?nossl", prop);
+		Connection connection = driver.connect("jdbc:graph:" + neo4j.getBoltUrl() + "/?nossl", prop);
 		Assert.assertTrue(connection instanceof BoltGraphConnection);
 	}
 

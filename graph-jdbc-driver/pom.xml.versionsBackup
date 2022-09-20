@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.memgraph</groupId>
         <artifactId>graph-jdbc-parent</artifactId>
-        <version>0.4.0</version>
+        <version>0.4.0-SNAPSHOT</version>
     </parent>
 
     <!-- =========== -->

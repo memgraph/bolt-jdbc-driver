@@ -57,7 +57,7 @@ public class BoltGraphDriverTest {
 
 	@Rule public ExpectedException expectedEx = ExpectedException.none();
 
-	private static final String COMPLETE_VALID_URL = "jdbc:neo4j:bolt://test";
+	private static final String COMPLETE_VALID_URL = "jdbc:graph:bolt://test";
 	private static final String BOLT_URL = "bolt://test";
 	private static org.neo4j.driver.Driver mockedDriver;
 
@@ -87,7 +87,7 @@ public class BoltGraphDriverTest {
 
 	@Test public void shouldConnectReturnNullIfUrlNotValid() throws SQLException {
 		GraphDriver driver = new BoltDriver((routingUris, config, authToken, info) -> mockedDriver);
-		assertNull(driver.connect("jdbc:neo4j:http://localhost:7474", null));
+		assertNull(driver.connect("jdbc:graph:http://localhost:7474", null));
 		assertNull(driver.connect("bolt://localhost:7474", null));
 		assertNull(driver.connect("jdbcbolt://localhost:7474", null));
 		assertNull(driver.connect("jdbc:mysql://localhost:3306/sakila", null));
@@ -106,7 +106,7 @@ public class BoltGraphDriverTest {
 		expectedEx.expectMessage("Unable to connect to somehost:9999");
 
 		GraphDriver driver = new BoltDriver();
-		driver.connect("jdbc:neo4j:bolt://somehost:9999", null);
+		driver.connect("jdbc:graph:bolt://somehost:9999", null);
 	}
 
 	@Test public void shouldAcceptTrustStrategyParamsSystemCertificates() throws SQLException, URISyntaxException {
@@ -150,14 +150,14 @@ public class BoltGraphDriverTest {
 	/*------------------------------*/
 	@Test public void shouldAcceptURLOK() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GraphDriver driver = new BoltDriver();
-		assertTrue(driver.acceptsURL("jdbc:neo4j:bolt://localhost:7474"));
-		assertTrue(driver.acceptsURL("jdbc:neo4j:bolt://192.168.0.1:7474"));
-		assertTrue(driver.acceptsURL("jdbc:neo4j:bolt://localhost:8080,localhost:8081"));
+		assertTrue(driver.acceptsURL("jdbc:graph:bolt://localhost:7474"));
+		assertTrue(driver.acceptsURL("jdbc:graph:bolt://192.168.0.1:7474"));
+		assertTrue(driver.acceptsURL("jdbc:graph:bolt://localhost:8080,localhost:8081"));
 	}
 
 	@Test public void shouldAcceptURLKO() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GraphDriver driver = new BoltDriver();
-		assertFalse(driver.acceptsURL("jdbc:neo4j:http://localhost:7474"));
+		assertFalse(driver.acceptsURL("jdbc:graph:http://localhost:7474"));
 		assertFalse(driver.acceptsURL("jdbc:file://192.168.0.1:7474"));
 		assertFalse(driver.acceptsURL("bolt://localhost:7474"));
 	}

@@ -53,7 +53,7 @@ public class BoltGraphDriverUrlTest {
 
 	@Parameterized.Parameters
 	public static Iterable<?> data() {
-		return Arrays.asList("jdbc:neo4j:bolt://test", "jdbc:neo4j:bolt+s://test", "jdbc:neo4j:bolt+ssc://test");
+		return Arrays.asList("jdbc:graph:bolt://test", "jdbc:graph:bolt+s://test", "jdbc:graph:bolt+ssc://test");
 	}
 
 	@BeforeClass
@@ -66,7 +66,7 @@ public class BoltGraphDriverUrlTest {
 	}
 
 	private String getBoltUrl() {
-		return completeValidUrl.replace("jdbc:neo4j:", "");
+		return completeValidUrl.replace("jdbc:graph:", "");
 	}
 
 	private String getPrefix() {

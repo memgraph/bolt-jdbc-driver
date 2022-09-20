@@ -51,11 +51,11 @@ public class JdbcConnectionTestUtils {
     }
 
     public static Connection getConnection(Neo4jContainer<?> neo4j, String parameters) throws SQLException {
-        //return DriverManager.getConnection("jdbc:neo4j:" + neo4j.boltURI() + "?nossl,user=neo4j,password=neo4j");
+        //return DriverManager.getConnection("jdbc:graph:" + neo4j.boltURI() + "?nossl,user=neo4j,password=neo4j");
         if (!warmedup) {
             warmup();
         }
-        return DriverManager.getConnection("jdbc:neo4j:" + neo4j.getBoltUrl() + "?nossl" + parameters, USERNAME, PASSWORD);
+        return DriverManager.getConnection("jdbc:graph:" + neo4j.getBoltUrl() + "?nossl" + parameters, USERNAME, PASSWORD);
     }
 
     public static Properties defaultInfo() {
@@ -70,7 +70,7 @@ public class JdbcConnectionTestUtils {
         if (!warmedup) {
             warmup();
         }
-        return DriverManager.getConnection("jdbc:neo4j:" + neo4j.getBoltUrl(), info);
+        return DriverManager.getConnection("jdbc:graph:" + neo4j.getBoltUrl(), info);
     }
 
     public static Connection getConnection(Neo4jContainer<?> neo4j) throws SQLException {

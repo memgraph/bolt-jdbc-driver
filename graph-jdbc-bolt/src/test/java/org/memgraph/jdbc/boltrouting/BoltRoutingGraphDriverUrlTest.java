@@ -51,7 +51,7 @@ public class BoltRoutingGraphDriverUrlTest {
 
 	@Parameterized.Parameters
 	public static Iterable<?> data() {
-		return Arrays.asList("jdbc:neo4j:neo4j://test", "jdbc:neo4j:neo4j+s://test", "jdbc:neo4j:neo4j+ssc://test");
+		return Arrays.asList("jdbc:graph:neo4j://test", "jdbc:graph:neo4j+s://test", "jdbc:graph:neo4j+ssc://test");
 	}
 
 	@BeforeClass

@@ -74,8 +74,8 @@ public class SamplePT {
 
 	@State(Scope.Benchmark) public static class Data {
 		@Setup public void initialize() throws ClassNotFoundException, SQLException, IOException {
-			jdbcConnection = DriverManager.getConnection("jdbc:neo4j:bolt://localhost:7687?user=neo4j,password=test");
-			jdbcConnectionDebug = DriverManager.getConnection("jdbc:neo4j:bolt://localhost:7687?user=neo4j,password=test,debug");
+			jdbcConnection = DriverManager.getConnection("jdbc:graph:bolt://localhost:7687?user=neo4j,password=test");
+			jdbcConnectionDebug = DriverManager.getConnection("jdbc:graph:bolt://localhost:7687?user=neo4j,password=test,debug");
 			driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "test"));
 		}
 

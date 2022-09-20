@@ -50,7 +50,7 @@ public class BoltGraphAuthenticationIT {
 	private String NEO4J_JDBC_BOLT_URL;
 
 	@Before public void setup() {
-		NEO4J_JDBC_BOLT_URL = String.format("jdbc:neo4j:bolt://%s:%d", neo4j.getHost(), neo4j.getMappedPort(7687));
+		NEO4J_JDBC_BOLT_URL = String.format("jdbc:graph:bolt://%s:%d", neo4j.getHost(), neo4j.getMappedPort(7687));
 	}
 
 	@Test public void shouldAuthenticate() throws SQLException {
