@@ -19,6 +19,7 @@
     <name>Graph JDBC Packaging</name>
     <artifactId>graph-jdbc-driver</artifactId>
     <description>Module to package Graph JDBC Driver into one jar</description>
+    <packaging>jar</packaging>
 
     <!-- ================ -->
     <!-- = Dependency   = -->
