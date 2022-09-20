@@ -13,12 +13,20 @@ import java.sql.SQLException;
 
 public class Example {
     public static void main(String[] args) {
-        try (Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "user", "")) {
+        try (Connection con = DriverManager.getConnection("jdbc:graph:bolt://localhost", "user", "")) {
             executeQuery(con, "MATCH (n) DETACH DELETE n");
-            executeQuery(con, "CREATE (n:Node {id:1});");
-            executeQuery(con, "CREATE (n:Node {id:2});");
-            executeQuery(con, "CREATE (n:Node {id:3});");
-            executeQuery(con, "MATCH (n) RETURN n");
+
+            executeQuery(con, "CREATE (:User{name: \"John\"})-[:FRIEND]->(:User{name:\"Mate\", age:15})");
+
+            PreparedStatement stmt = con.prepareStatement("MATCH (u:User)-[:FRIEND]-(f:User) WHERE u.name = $0 RETURN f.name, f.age");
+
+            stmt.setString(0, "John");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -33,5 +41,6 @@ public class Example {
                 }
             }
         }
+        System.out.println("Query " + query + " executed");
     }
 }

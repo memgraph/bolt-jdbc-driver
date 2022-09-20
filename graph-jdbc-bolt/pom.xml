@@ -16,17 +16,18 @@
     <!-- =========== -->
     <!-- = General = -->
     <!-- =========== -->
-    <name>Neo4j JDBC Bolt</name>
+    <name>Graph JDBC Bolt</name>
     <artifactId>graph-jdbc-bolt</artifactId>
-    <description>Bolt implementation for the Neo4j JDBC Driver</description>
+    <description>Implementation for the Graph JDBC Driver</description>
+    <packaging>jar</packaging>
 
     <!-- ============================= -->
     <!-- = Dependency                = -->
     <!-- ============================= -->
     <dependencies>
         <dependency>
-            <groupId>org.neo4j.driver</groupId>
-            <artifactId>neo4j-java-driver</artifactId>
+            <groupId>org.memgraph</groupId>
+            <artifactId>bolt-java-driver</artifactId>
         </dependency>
 
         <dependency>
