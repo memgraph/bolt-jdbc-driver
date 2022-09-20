@@ -29,7 +29,7 @@ The snippet was run using Memgraph
 [source,java]
 ----
 // Connecting
-try (Connection connection = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "user", password);
+try (Connection connection = DriverManager.getConnection("jdbc:graph:bolt://localhost", "user", password);
     // Querying
      PreparedStatement stmt = connection.prepareStatement("MATCH (u:User)-[:FRIEND]-(f:User) WHERE u.name = $0 RETURN f.name, f.age")) {
      
@@ -54,31 +54,10 @@ As most JDBC clients and tools don't support complex objects, the driver can fla
 This is enabled with the JDBC-URL parameter `flatten=<rows>`, where `<rows>` indicates how many rows are sampled to determine those columns.
 With `-1` all rows are sampled and with any other value you determine the number of rows being looked at.
 
-=== Tomcat
-When the JDBC driver is configured as a JNDI resource into Tomcat, you must include these two arguments on `Resource` configuration:
-
-* `removeAbandonedOnBorrow="true"`
-* `closeMethod="close"`
-
-Here's an example:
-
-```
-    <Resource name="jdbc/neo4j"
-              auth="Container"
-              type="javax.sql.DataSource"
-              username="user"
-              password="password"
-              driverClassName="org.memgraph.jdbc.bolt.BoltDriver"
-              url="jdbc:memgraph:bolt://localhost"
-              removeAbandonedOnBorrow="true"
-              closeMethod="close"
-              />
-```
-
 
 === Building the driver yourself
 
-First clone https://github.com/neo4j-contrib/graph-jdbc[the repository].
+First clone https://github.com/memgraph/memgraph-jdbc[the repository].
 
 .Run all unit tests & integration tests
 -------------------------------------------------

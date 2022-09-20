@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class Example {
     public static void main(String[] args) {
-        try (Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "user", "")) {
+        try (Connection con = DriverManager.getConnection("jdbc:graph:bolt://localhost", "user", "")) {
             executeQuery(con, "MATCH (n) DETACH DELETE n");
 
             executeQuery(con, "CREATE (:User{name: \"John\"})-[:FRIEND]->(:User{name:\"Mate\", age:15})");

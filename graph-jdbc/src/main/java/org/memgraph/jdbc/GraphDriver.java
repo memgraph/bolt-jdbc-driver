@@ -41,7 +41,7 @@ public abstract class GraphDriver implements java.sql.Driver {
 	/**
 	 * JDBC prefix for the connection url.
 	 */
-	protected static final String JDBC_PREFIX = "jdbc:neo4j:";
+	protected static final String JDBC_PREFIX = "jdbc:graph:";
 
 	/**
 	 * Driver prefix for the connection url.
