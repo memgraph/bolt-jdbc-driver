@@ -1,5 +1,5 @@
-= Neo4j JDBC Driver
+= Graph JDBC Driver
 
-This is the core module of the neo4j-jdbc driver.
+This is the core module of the graph-jdbc driver.
 
 It contains all the abstract classes implementing the java.sql interface and also the common pieces of code between the modules.

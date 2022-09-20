@@ -1,11 +1,11 @@
-= Neo4j JDBC Driver - Bolt
+= Graph JDBC Driver - Bolt
 
-This module implements the neo4j-jdbc driver with the BOLT protocol.
+This module implements the graph-jdbc driver with the BOLT protocol.
 
-This module is a JDBC-way wrapper of the https://github.com/neo4j/neo4j-java-driver[Neo4j-java] driver currently implementing an alpha
+This module is a JDBC-way wrapper of the https://github.com/memgraph/memgraph-java-driver[graph-java] driver currently implementing an alpha
 version of the BOLT protocol for Java.
 
-== Special wrapping for neo4j nodes relationships and paths. ==
+== Special wrapping for graph nodes relationships and paths. ==
 
 Even if you can access each value in a `ResultSet` with multiple type-specific method, you might want to get a whole _node_, _relationship_ or _path_.
 
@@ -32,7 +32,7 @@ info.setProperty("connection.acquisition.timeout","20");
 info.setProperty("connection.liveness.check.timeout","20");
 info.setProperty("connection.timeout","321000");
 
-DriverManager.getConnection(jdbc:neo4j:bolt://test?&connection.timeout=1000&encryption=true, info);
+DriverManager.getConnection(jdbc:graph:bolt://test?&connection.timeout=1000&encryption=true, info);
 ----
 
 The values inside the Properties are used as default ones and overridden by the values passed into the URL.
@@ -72,8 +72,6 @@ Property key: `connection.acquisition.timeout`.
 
 Value: amount of milliseconds (E.G: 60000)
 
-For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
-
 === Max Connection Lifetime ===
 How often the connection health is checked in the pool.
 
@@ -81,16 +79,12 @@ Property key: `max.connection.lifetime`.
 
 Value: amount of minutes (E.G: 60)
 
-For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
-
 === Max Connection Poolsize ===
 The maximum number of connection in the pool.
 
 Property key: `max.connection.poolsize`.
 
 Value: number of connections (E.G: 50)
-
-For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-config-connection-pool-management[Connection pool management]
 
 === Connection Liveness Check Timeout  ===
 You normally should not need to tune this parameter. No connection liveliness check is done by default. Value 0 means connections will always be tested for validity and negative values mean connections will never be tested.
@@ -105,8 +99,6 @@ Specify socket connection timeout.
 Property key: `connection.timeout`.
 
 Value: the timeout duration in milliseconds (E.G: 1000)
-
-For more information: https://neo4j.com/docs/developer-manual/current/drivers/client-applications/#driver-configuration-connection-timeout[Connection Timeout]
 
 === Encryption ===
 Set to use encrypted/unencrypted traffic.
@@ -138,86 +130,4 @@ Value: the timeout duration in milliseconds (E.G: 1000)
 
 
 == Temporal functions ==
-Since the 3.4 version you can get the temporal information stored in the database both as `java.sql.\*` typs and `java.time.*`.
-
-These methods are implemented to get temporal data:
-
-* `resultSet.getObject(int)` returns the `java.sql.` objects
-* `resultSet.getObject(String)` returns the `java.sql.` objects
-* `resultSet.getObject(int, Class)` returns the `java.time.` types, if you pass it.
-* `resultSet.getObject(String, Class)` returns the `java.time.` types, if you pass it.
-* `resultSet.getTimestamp` for `datetime()` and `localdatetime()`
-* `resultSet.getDate` for `date()`
-* `resultSet.getTime` for `time()` and `localtime()`
-
-.Java types for neo4j temporal functions
-|===
-|java.time | neo4j | java.sql
-
-|LocalDate | date() | Date
-
-|LocalTime | localtime() | Time
-
-|OffsetTime | time() | Time
-
-|LocalDateTime | localdatetime() | Timestamp
-
-|ZonedDateTime | datetime() | Timestamp
-
-|===
-
-=== Duration ===
-The Duration concept is not in the JDBC specifications, so you can retrieve it using:
-
-* `resultSet.getObject(int | String)` returns a `Map<String, Object>` with Long values for the keys: `'months', 'days','seconds', 'nanoseconds'`
-
-* `resultSet.getObject(int | String, org.neo4j.driver.v1.types.IsoDuration.class)` returns the internal object.
-
-
-=== Inside nodes, relationships or arrays ===
-When you retrieve a Node, Relationship or an array, the internal object created by a temporal function contains
-always a `java.sql` type value.
-
-E.g:
-```
-ResultSet rs = statement.executeQuery("CREATE (e:Event {when: [localdatetime('2015-12-31T19:32:24')] }) RETURN e AS event");
-
-rs.next();
-Map<String, Object> map = (Map)rs.getObject(1);
-Object whenField = map.get("when");
-List whenList = (List) whenField;
-
-java.sql.Timestamp when = (java.sql.Timestamp)whenList.get(0);
-```
-
-== Spatial functions ==
-Since the 3.4 version you can get the spatial information stored in the database both as `Map`.
-
-You can retrieve the spatial data using:
-
-* `resultSet.getObject(int | String)` returns a `Map<String, Object>`
-* `resultSet.getObject(int | String, org.neo4j.driver.v1.types.Point)` returns a `Point`
-
-.Keys for Spatial functions
-|===
-|neo4j | keys(value)
-
-| point({x, y}) | srid(7203), crs('cartesian'), x, y
-| point({x, y, z}) | srid(9157), crs('cartesian-3d'), x, y, z
-| point({latitude, longitude}) |  srid(4326), crs('wgs-84'), x, y, latitude, longitude
-| point({latitude, longitude, height}) |  srid(4979), crs('wgs-84-3d'), x, y, z, latitude, longitude, height
-|===
-
-=== Inside nodes, relationships or arrays ===
-When you retrieve a Node, Relationship or an array, the internal object created by a spatial function contains
-always a `Map<String, Object>`
-
-E.g:
-```
-ResultSet rs = statement.executeQuery("RETURN [point({ latitude: 12, longitude: 56, height: 4321 })] AS geo_3d");
-
-rs.next();
-Object points = rs.getObject(1);
-List pointList = (List) points;
-Map pointMap = (Map) point;
-```
+The compatibility with Memgraph's temporal types hasn't yet been checked, and will be revisited in further releases if needed.

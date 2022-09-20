@@ -1,7 +1,7 @@
 == Overview: Bolt Protocol JDBC Driver
 :bolt-jdbc-version: 0.1.0
 
-*This is a JDBC driver for Bolt protocol supporting Cypher over JDBC*.
+*This is a JDBC driver for Bolt protocol supporting Cypher over JDBC, forked by Memgraph to support all graph databases with Bolt protocol.*
 
 This driver was mainly developed by http://larus-ba.it[Larus BA, Italy], a certified consulting and integration solutions partner for Neo4j.
 *Thank you* so much for all your work.
