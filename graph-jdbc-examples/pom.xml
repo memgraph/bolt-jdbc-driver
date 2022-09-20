@@ -16,24 +16,24 @@
 	<!-- = General = -->
 	<!-- =========== -->
 	<artifactId>graph-jdbc-examples</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<name>Graph JDBC Driver Examples</name>
 	<description>Parent POM for Graph JDBC Driver Examples</description>
-
-	<!-- =========== -->
-	<!-- = Modules = -->
-	<!-- =========== -->
-	<modules>
-	</modules>
 
     <!-- ============================= -->
     <!-- = Dependency                = -->
     <!-- ============================= -->
     <dependencies>
+<!--		<dependency>-->
+<!--			<groupId>org.memgraph</groupId>-->
+<!--			<artifactId>graph-jdbc-driver</artifactId>-->
+<!--			<version>4.0.6</version>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>org.memgraph</groupId>
-			<artifactId>graph-jdbc-driver</artifactId>
-			<version>4.0.6</version>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-jdbc-driver</artifactId>
+			<version>4.0.5</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
