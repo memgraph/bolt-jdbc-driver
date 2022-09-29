@@ -42,6 +42,13 @@
 	<!-- ============== -->
 	<developers>
 		<developer>
+			<name>Andi Skrgat</name>
+			<email>andi.skrgat@memgraph.io</email>
+			<organization>Memgraph</organization>
+			<organizationUrl>https://memgraph.com</organizationUrl>
+		</developer>
+
+		<developer>
 			<name>Josip Mrden</name>
 			<email>josip.mrden@memgraph.io</email>
 			<organization>Memgraph</organization>
@@ -231,10 +238,6 @@
 							<goals>
 								<goal>sign</goal>
 							</goals>
-							<configuration>
-								<keyname>${gpg.keyname}</keyname>
-								<passphraseServerId>${gpg.keyname}</passphraseServerId>
-							</configuration>
 						</execution>
 					</executions>
 				</plugin>
@@ -419,7 +422,6 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.8</version>
 						<configuration>
 							<append>true</append>
 							<includes>
