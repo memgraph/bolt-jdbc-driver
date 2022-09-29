@@ -1,2 +1,2 @@
 org.memgraph.jdbc.bolt.BoltDriver
-org.memgraph.jdbc.boltrouting.BoltRoutingNeo4jDriver
+org.memgraph.jdbc.boltrouting.BoltRoutingGraphDriver
