@@ -19,6 +19,8 @@
     <name>Graph JDBC Driver</name>
     <artifactId>graph-jdbc-driver</artifactId>
     <description>Graph JDBC Driver using Bolt protocol</description>
+    <url>https://github.com/memgraph/bolt-jdbc-driver</url>
+    <packaging>jar</packaging>
 
     <!-- ================ -->
     <!-- = Dependency   = -->
