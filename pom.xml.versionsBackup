@@ -1,453 +1,364 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- =========== -->
-	<!-- = General = -->
-	<!-- =========== -->
-	<groupId>org.memgraph</groupId>
-	<artifactId>graph-jdbc-parent</artifactId>
-	<version>0.4.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <!-- =========== -->
+    <!-- = General = -->
+    <!-- =========== -->
+    <groupId>org.memgraph</groupId>
+    <artifactId>graph-jdbc-parent</artifactId>
+    <version>0.4.6-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>Graph JDBC Driver Parent</name>
-	<description>Parent POM for Graph Bolt JDBC Driver and Modules</description>
-	<url>https://github.com/memgraph/bolt-jdbc-driver</url>
+    <name>Graph JDBC Driver Parent</name>
+    <description>Parent POM for Graph Bolt JDBC Driver and Modules</description>
+    <url>https://github.com/memgraph/bolt-jdbc-driver</url>
 
-	<!-- =========== -->
-	<!-- = Modules = -->
-	<!-- =========== -->
-	<modules>
-		<module>graph-jdbc</module>
-		<module>graph-jdbc-bolt</module>
-		<module>graph-jdbc-driver</module>
-		<module>graph-jdbc-examples</module>
-	</modules>
+    <!-- =========== -->
+    <!-- = Modules = -->
+    <!-- =========== -->
+    <modules>
+        <module>graph-jdbc</module>
+        <module>graph-jdbc-bolt</module>
+        <module>graph-jdbc-driver</module>
+        <!--<module>graph-jdbc-examples</module> -->
+    </modules>
 
-	<!-- =========== -->
-	<!-- = Licence = -->
-	<!-- =========== -->
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-
-	<!-- ============== -->
-	<!-- = Developers = -->
-	<!-- ============== -->
-	<developers>
-		<developer>
-			<name>Josip Mrden</name>
-			<email>josip.mrden@memgraph.io</email>
-			<organization>Memgraph</organization>
-			<organizationUrl>https://memgraph.com</organizationUrl>
-		</developer>
-	</developers>
-
-	<!-- ============================= -->
-	<!-- = Source Control management = -->
-	<!-- ============================= -->
-	<scm>
-		<connection>scm:git:git://github.com/memgraph/bolt-jdbc-driver.git</connection>
-		<developerConnection>scm:git:git@github.com:memgraph/bolt-jdbc-driver.git</developerConnection>
-		<url>https://github.com/memgraph/bolt-jdbc-driver</url>
-	</scm>
-
-	<!-- ============================= -->
-	<!-- = Properties = -->
-	<!-- ============================= -->
-	<properties>
-		<!-- General -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>8</java.version>
-
-		<!-- Deps version -->
-		<mockito.version>4.6.1</mockito.version>
-		<junit.version>4.13.2</junit.version>
-		<jmh.version>1.35</jmh.version>
-		<memgraph.java.driver.version>0.4.3</memgraph.java.driver.version>
-		<neo4j.version>4.3.0</neo4j.version>
-		<httpclient.version>4.5.13</httpclient.version>
-		<jackson.version>2.13.3</jackson.version>
-		<testcontainers.version>1.17.2</testcontainers.version>
-
-		<!-- Plugin version -->
-		<maven.plugin.compiler>3.10.1</maven.plugin.compiler>
-		<maven.plugin.resources>2.7</maven.plugin.resources>
-		<maven.plugin.shade>3.3.0</maven.plugin.shade>
-		<maven.plugin.javadoc>3.4.0</maven.plugin.javadoc>
-		<maven.plugin.source>3.2.1</maven.plugin.source>
-		<maven.plugin.gpg>1.4</maven.plugin.gpg>
-		<maven.plugin.surefire>2.22.2</maven.plugin.surefire>
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-
-		<nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
-
-		<resilience4j.version>1.7.1</resilience4j.version>
-	</properties>
-
-	<!-- ============================= -->
-	<!-- = Dependency management = -->
-	<!-- ============================= -->
-	<dependencyManagement>
-		<dependencies>
-			<!-- Inter-module dependencies -->
-			<dependency>
-				<groupId>org.memgraph</groupId>
-				<artifactId>graph-jdbc</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.memgraph</groupId>
-				<artifactId>graph-jdbc-bolt</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Deps to the HTTP client -->
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${httpclient.version}</version>
-			</dependency>
-			<!-- Deps to Jackson for JSON manipulation -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>${jackson.version}</version>
-			</dependency>
-
-			<!-- Deps to Neo4j java driver -->
-			<dependency>
-				<groupId>org.memgraph</groupId>
-				<artifactId>bolt-java-driver</artifactId>
-				<version>0.4.3</version>
-			</dependency>
-
-			<dependency>
-				<groupId>io.github.resilience4j</groupId>
-				<artifactId>resilience4j-retry</artifactId>
-				<version>${resilience4j.version}</version>
-			</dependency>
+    <!-- =========== -->
+    <!-- = Licence = -->
+    <!-- =========== -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 
-			<!-- Deps to test framework -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>${mockito.version}</version>
-			</dependency>
+    <!-- ============== -->
+    <!-- = Developers = -->
+    <!-- ============== -->
+    <developers>
+        <developer>
+            <name>Andi Skrgat</name>
+            <email>andi.skrgat@memgraph.io</email>
+            <organization>Memgraph</organization>
+            <organizationUrl>https://memgraph.com</organizationUrl>
+        </developer>
 
-			<!-- Deps for performance tests -->
-			<dependency>
-				<groupId>org.openjdk.jmh</groupId>
-				<artifactId>jmh-core</artifactId>
-				<version>${jmh.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openjdk.jmh</groupId>
-				<artifactId>jmh-generator-annprocess</artifactId>
-				<version>${jmh.version}</version>
-			</dependency>
+        <developer>
+            <name>Josip Mrden</name>
+            <email>josip.mrden@memgraph.io</email>
+            <organization>Memgraph</organization>
+            <organizationUrl>https://memgraph.com</organizationUrl>
+        </developer>
+    </developers>
 
-			<!-- Deps for Testcontainers -->
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>testcontainers</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>neo4j</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <!-- ============================= -->
+    <!-- = Source Control management = -->
+    <!-- ============================= -->
+    <scm>
+        <connection>scm:git:git://github.com/memgraph/bolt-jdbc-driver.git</connection>
+        <developerConnection>scm:git:git@github.com:memgraph/bolt-jdbc-driver.git</developerConnection>
+        <url>https://github.com/memgraph/bolt-jdbc-driver</url>
+    </scm>
 
-	<!-- ============================= -->
-	<!-- = Dependency = -->
-	<!-- ============================= -->
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <!-- ============================= -->
+    <!-- = Properties = -->
+    <!-- ============================= -->
+    <properties>
+        <!-- General -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
 
-	<!-- ========= -->
-	<!-- = Build = -->
-	<!-- ========= -->
-	<build>
-		<!-- Enable filter resources -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.4.0</version>
-					<executions>
-						<execution>
-							<id>attach-javadocs</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>3.0.1</version>
-					<executions>
-						<execution>
-							<id>sign-artifacts</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>sign</goal>
-							</goals>
-							<configuration>
-								<keyname>${gpg.keyname}</keyname>
-								<passphraseServerId>${gpg.keyname}</passphraseServerId>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>${nexus.staging.maven.plugin.version}</version>
-					<extensions>true</extensions>
-					<configuration>
-						<serverId>ossrh</serverId>
-						<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-						<autoReleaseAfterClose>true</autoReleaseAfterClose>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
+        <!-- Deps version -->
+        <mockito.version>4.6.1</mockito.version>
+        <junit.version>4.13.2</junit.version>
+        <jmh.version>1.35</jmh.version>
+        <memgraph.java.driver.version>0.4.3</memgraph.java.driver.version>
+        <neo4j.version>4.3.0</neo4j.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <jackson.version>2.13.3</jackson.version>
+        <testcontainers.version>1.17.2</testcontainers.version>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.plugin.compiler}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<forceJavacCompilerUse>true</forceJavacCompilerUse>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>${maven.plugin.source}</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven.plugin.javadoc}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<source>8</source>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        <!-- Plugin version -->
+        <maven.plugin.compiler>3.10.1</maven.plugin.compiler>
+        <maven.plugin.resources>2.7</maven.plugin.resources>
+        <maven.plugin.shade>3.3.0</maven.plugin.shade>
+        <maven.plugin.javadoc>3.4.0</maven.plugin.javadoc>
+        <maven.plugin.source>3.2.1</maven.plugin.source>
+        <maven.plugin.gpg>1.4</maven.plugin.gpg>
+        <maven.plugin.surefire>2.22.2</maven.plugin.surefire>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 
-	<!-- =========== -->
-	<!-- = Profile = -->
-	<!-- =========== -->
-	<profiles>
-		<!-- Profile used in the release process -->
-		<profile>
-			<id>release-sign-artifacts</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>${maven.plugin.source}</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>${maven.plugin.javadoc}</version>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+        <nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
 
-				</plugins>
-			</build>
-		</profile>
+        <resilience4j.version>1.7.1</resilience4j.version>
+    </properties>
 
-		<!-- Just run IT test -->
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*IT.java</include>
-								<include>**/*Test.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+    <!-- ============================= -->
+    <!-- = Dependency management = -->
+    <!-- ============================= -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Inter-module dependencies -->
+            <dependency>
+                <groupId>org.memgraph</groupId>
+                <artifactId>graph-jdbc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.memgraph</groupId>
+                <artifactId>graph-jdbc-bolt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-		<!-- Just run IT test -->
-		<profile>
-			<id>integration-test</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*IT.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+            <!-- Deps to the HTTP client -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!-- Deps to Jackson for JSON manipulation -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
 
-		<!-- Just run Performance test -->
-		<profile>
-			<id>performance-test</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.plugin.surefire}</version>
-						<configuration>
-							<includes>
-								<include>**/*PT.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+            <!-- Deps to Neo4j java driver -->
+            <dependency>
+                <groupId>org.memgraph</groupId>
+                <artifactId>bolt-java-driver</artifactId>
+                <version>0.4.3</version>
+            </dependency>
 
-		<!-- Just run Quality Assurance check -->
-		<profile>
-			<id>sonar</id>
-			<properties>
-				<sonar.host.url>http://5.9.211.195:9000</sonar.host.url>
-				<sonar.language>java</sonar.language>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sonar-maven-plugin</artifactId>
-						<version>3.0.2</version>
-					</plugin>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.8</version>
-						<configuration>
-							<append>true</append>
-							<includes>
-								<include>org.neo4j.*</include>
-							</includes>
-							<destFile>${sonar.jacoco.reportPath}</destFile>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-retry</artifactId>
+                <version>${resilience4j.version}</version>
+            </dependency>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+
+            <!-- Deps to test framework -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+
+            <!-- Deps for performance tests -->
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>${jmh.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh.version}</version>
+            </dependency>
+
+            <!-- Deps for Testcontainers -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>neo4j</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ============================= -->
+    <!-- = Dependency = -->
+    <!-- ============================= -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- ========= -->
+    <!-- = Build = -->
+    <!-- ========= -->
+    <build>
+        <!-- Enable filter resources -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.plugin.compiler}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.plugin.source}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.plugin.javadoc}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>8</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus.staging.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- =========== -->
+    <!-- = Profile = -->
+    <!-- =========== -->
+    <profiles>
+        <!-- Just run IT test -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.plugin.surefire}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                                <include>**/*Test.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Just run IT test -->
+        <profile>
+            <id>integration-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.plugin.surefire}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Just run Performance test -->
+        <profile>
+            <id>performance-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.plugin.surefire}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*PT.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>
